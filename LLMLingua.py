@@ -124,7 +124,7 @@ def get_average_compress_rate(data):
 
 
 def data_processing_gsm8k(input_dir="outputs/Qwen2.5-7B-Instruct/gsm8k/7b/", model_type="qwen",
-                          llmlingua_path="/your_model_path/llmlingua-2-xlm-roberta-large-meetingbank"):
+                          llmlingua_path="./model/llmlingua-2-xlm-roberta-large-meetingbank"):
     """
     The overall pipeline to process the GSM8K data.
     """

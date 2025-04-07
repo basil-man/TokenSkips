@@ -47,12 +47,12 @@ def infer(args, test_data, answer_extraction_fn):
             if mess['role'] == 'user':
                 if args.model_type == 'llama3':
                     if args.compression_ratio < 1.0:
-                        prompt += f"{tokenizer.bos_token}" + "<|start_header_id|>user<|end_header_id|>\n\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}\n{tokenizer.eos_token}{args.compression_ratio}{tokenizer.eos_token}{tokenizer.eos_token}<|start_header_id|>assistant<|end_header_id|>\n\n"
+                        prompt += f"{tokenizer.bos_token}" + "<|start_header_id|>user<|end_header_id|>\n\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}\n{tokenizer.eos_token}{args.compression_ratio if not args.auto_gamma else 'auto'}{tokenizer.eos_token}{tokenizer.eos_token}<|start_header_id|>assistant<|end_header_id|>\n\n"
                     else:
                         prompt += f"{tokenizer.bos_token}" + "<|start_header_id|>user<|end_header_id|>\n\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}\n{tokenizer.eos_token}<|start_header_id|>assistant<|end_header_id|>\n\n"
                 elif args.model_type == 'qwen':
                     if args.compression_ratio < 1.0:
-                        prompt += "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}<|eot_id|>{args.compression_ratio}<|eot_id|><|im_end|>\n<|im_start|>assistant\n"
+                        prompt += "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}<|eot_id|>{args.compression_ratio if not args.auto_gamma else 'auto'}<|eot_id|><|im_end|>\n<|im_start|>assistant\n"
                     else:
                         prompt += "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nPlease reason step by step, and put your final answer within \\boxed{}.\n" + f"{mess['content']}<|im_end|>\n<|im_start|>assistant\n"
                 else:
@@ -141,13 +141,14 @@ if __name__ == "__main__":
     parser.add_argument("--use_adapter", action='store_true', default=False, help="whether to use LoRA")
     parser.add_argument("--compression_ratio", type=float, default=1.0, help="compression ratio for cot.")
     parser.add_argument("--benchmark", type=str, choices=['gsm8k', 'math'], default="gsm8k")
-    parser.add_argument("--data-type", type=str, choices=['train', 'test'], default="test")
+    parser.add_argument("--data-type", type=str, choices=['train', 'test', 'auto'], default="test")
 
     parser.add_argument("--max_num_examples", type=int, default=100000000000000, help="maximum number of examples to evaluate.")
     parser.add_argument("--max_new_tokens", type=int, default=512)
     parser.add_argument("--eval_batch_size", type=int, default=16, help="batch size for evaluation.")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--auto_gamma", action='store_true', default=False, help="whether to enable auto gamma")
     args, unparsed_args = parser.parse_known_args()
 
     # os.environ['CUDA_VISIBLE_DEVICES'] = "0"

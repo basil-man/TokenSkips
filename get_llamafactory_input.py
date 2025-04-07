@@ -57,7 +57,7 @@ def get_llamafactory_input():
         datalines.append(data)
     print(len(datalines))
     random.shuffle(datalines)
-    write_list_to_json(datalines, './outputs/mydataset_compressed_gsm8k_llmlingua2_qwen_7B.json')
+    write_list_to_json(datalines, './outputs/mydataset_compressed_gsm8k_qwen_math_qwen_7B.json')
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /your_model_path/Qwen2.5-7B-Instruct
+model_name_or_path: ./model/Qwen2.5-7B-Instruct
 
 ### method
 stage: sft
@@ -18,7 +18,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /your_save_model_path/lora_sft_llmlingua2_Qwen_7B_lr_5e-5
+output_dir: ./model/lora_sft_llmlingua2_Qwen_7B_lr_5e-5_autoversion
 logging_steps: 10
 save_steps: 300
 plot_loss: true

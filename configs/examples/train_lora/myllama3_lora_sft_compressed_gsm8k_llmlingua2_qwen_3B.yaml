@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /your_model_path/Qwen2.5-3B-Instruct
+model_name_or_path: ./model/Qwen2.5-3B-Instruct
 
 ### method
 stage: sft
@@ -10,7 +10,7 @@ lora_rank: 8
 lora_alpha: 16
 
 ### dataset
-dataset: mydataset_compressed_gsm8k_llmlingua2_qwen_3B
+dataset: merged_dataset
 template: qwen
 cutoff_len: 2048
 max_samples: 10000
@@ -18,7 +18,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /your_save_model_path/lora_sft_llmlingua2_Qwen_3B_lr_5e-5
+output_dir: ./model/lora_sft_llmlingua2_Qwen_3B_lr_5e-5_auto_tuned
 logging_steps: 10
 save_steps: 300
 plot_loss: true

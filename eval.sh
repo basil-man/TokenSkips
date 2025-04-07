@@ -1,6 +1,6 @@
 BENCHMARK="gsm8k" # "gsm8k", "math"
 OUPTUT_DIR="outputs/Qwen2.5-7B-Instruct/${BENCHMARK}/"
-MODEL_PATH="/your_model_path/Qwen2.5-7B-Instruct"
+MODEL_PATH="./model/Qwen2.5-7B-Instruct"
 MODEL_SIZE="7b"
 MODEL_TYPE="qwen" # "llama3", "qwen"
 DATA_TYPE="test" # "train", "test"
@@ -13,11 +13,14 @@ TEMPERATURE=0.0
 SEED=42
 
 # TokenSkip Settings
-ADAPTER_PATH="/your_model_path/TokenSkip-Qwen2.5-7B-Instruct-GSM8K"
+ADAPTER_PATH="./model/TokenSkip-Qwen2.5-7B-Instruct-GSM8K"
 COMPRESSION_RATIO=0.5
-
-
-CUDA_VISIBLE_DEVICES=0 python ./evaluation.py --output-dir ${OUPTUT_DIR} --model-path ${MODEL_PATH} --tokenizer-path ${MODEL_PATH} \
-    --model-size ${MODEL_SIZE} --model-type ${MODEL_TYPE} --data-type ${DATA_TYPE}  --max_num_examples ${MAX_NUM_EXAMPLES} \
-    --max_new_tokens ${MAX_NEW_TOKENS} --eval_batch_size ${EVAL_BATCH_SIZE} --temperature ${TEMPERATURE} --seed ${SEED} --benchmark ${BENCHMARK} \
-    --adapter-path ${ADAPTER_PATH} --compression_ratio ${COMPRESSION_RATIO} --use_adapter
+for RATIO in 0.5 0.6 0.7 0.8 0.9 1.0; do
+    python ./evaluation.py --output-dir "outputs/Qwen2.5-7B-Instruct/gsm8k/qwen_math_compressed/" \
+        --model-path "./model/Qwen2.5-7B-Instruct" --tokenizer-path ${MODEL_PATH} \
+        --model-size "7b" --model-type "qwen" --data-type "test"  \
+        --max_num_examples 100000000000000 --max_new_tokens 512 \
+        --eval_batch_size 32 --temperature 0.0 --seed 42 --benchmark "gsm8k" \
+        --adapter-path "./model/lora_sft_qwen_math_Qwen_7B_lr_5e-5" \
+        --compression_ratio ${RATIO} --use_adapter;
+done
