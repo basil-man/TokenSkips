@@ -1,0 +1,6 @@
+*.json
+*.jsonl
+**/model/
+**/mllm_demo_data
+**/.ipynb_checkpoints
+**/Qwen/

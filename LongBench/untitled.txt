@@ -1,0 +1,13 @@
+vllm serve Qwen/Qwen2.5-7B-Instruct --api-key token-abc123 --tensor-parallel-size 1 --gpu-memory-utilization 0.95 --max_model_len 32760 --trust-remote-code --host 127.0.0.1 --port 8001
+
+python pred.py --model Qwen2.5-7B-Instruct --cot --mode test;
+
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 0.5;
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 0.6;
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 0.7;
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 0.8;
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 0.9;
+python pred.py --model Qwen_7B_lr_5e-5_longbench --cot --mode test --ratio 1.0;
+
+
+
